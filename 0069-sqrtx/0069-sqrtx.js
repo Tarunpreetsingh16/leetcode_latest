@@ -7,7 +7,7 @@ var mySqrt = function(x) {
     let right=x;
     let eligiblecandidate=0;
     while(left<=right){
-        let n=(left+parseInt((right-left)/2));
+        let n=parseInt((left+right)/2);
 
         if((n*n)==x) {
             return n;
