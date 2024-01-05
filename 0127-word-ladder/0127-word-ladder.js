@@ -11,27 +11,28 @@ const CustomNode = function(word, edges) {
 
 var ladderLength = function(beginWord, endWord, wordList) {
     let result = Infinity;
-    wordList.push(beginWord);
+    // wordList.push(beginWord);
     if (beginWord != endWord) {
         const visited1 = new Map();
         const visited2 = new Map();
 
         const queue1 = new Queue();
-        queue1.enqueue(new CustomNode(beginWord, 0));
+        queue1.enqueue(new CustomNode(beginWord, 1));
 
-        const queue2 = new Queue();
-        if (wordList.includes(endWord)) queue2.enqueue(new CustomNode(endWord, 0));
+        // const queue2 = new Queue();
+        // if (wordList.includes(endWord)) queue2.enqueue(new CustomNode(endWord, 0));
 
-        while (!queue1.isEmpty() && !queue2.isEmpty()) {
+        // while (!queue1.isEmpty() && !queue2.isEmpty()) {
+        while (!queue1.isEmpty()) {
             let node = queue1.dequeue();
             let word = node.word;
             let edges = node.edges;
             if (!visited1.has(word)) {
                 visited1.set(word, edges);
                 
-                if (visited2.has(word)) {
-                    console.log(result, "here")
-                    result = Math.min(visited2.get(word) + edges + 1, result);
+                // if (visited2.has(word)) {
+                if (word === endWord) {
+                    result = edges;
                 } 
                 else {
                     const validTransformations = getValidTransformations(word, wordList);
@@ -40,22 +41,22 @@ var ladderLength = function(beginWord, endWord, wordList) {
                 }
             }
 
-            node = queue2.dequeue();
-            word = node.word;
-            edges = node.edges;
-            if (!visited2.has(word)) {
-                visited2.set(word, edges);
+            // node = queue2.dequeue();
+            // word = node.word;
+            // edges = node.edges;
+            // if (!visited2.has(word)) {
+            //     visited2.set(word, edges);
                 
-                if (visited1.has(word)) {
-                    console.log(result, "there")
-                    result = Math.min(visited1.get(word) + edges + 1, result);
-                } 
-                else {
-                    const validTransformations = getValidTransformations(word, wordList);
-                    const unvisitedValidTransformations = getUnvisitedValidTransformations(validTransformations, visited2);
-                    enqueueTransformatons(queue2, unvisitedValidTransformations, edges);
-                }
-            }
+            //     if (visited1.has(word)) {
+            //         console.log(result, "there")
+            //         result = Math.min(visited1.get(word) + edges + 1, result);
+            //     } 
+            //     else {
+            //         const validTransformations = getValidTransformations(word, wordList);
+            //         const unvisitedValidTransformations = getUnvisitedValidTransformations(validTransformations, visited2);
+            //         enqueueTransformatons(queue2, unvisitedValidTransformations, edges);
+            //     }
+            // }
         }
 
     }
