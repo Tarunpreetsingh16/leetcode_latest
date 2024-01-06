@@ -16,27 +16,7 @@ var jobScheduling = function(startTime, endTime, profit) {
 
     const cache = Array.from({length: profit.length});
 
-    const generateMaxProfit = (i) => {
-        if (i >= jobs.length) return 0;
-        if (cache[i]) return cache[i];
-
-        const {endTime, profit} = jobs[i];
-
-        const profitIfNextPicked = generateMaxProfit(i + 1);
-        
-        // since the jobs are sorted, we can find the next job using binary search
-        let nextJob = findNextJob(jobs, i + 1, jobs.length - 1, endTime); 
-
-        if (nextJob) {
-            const profitFromNextScheduledJob = generateMaxProfit(nextJob);
-            cache[i] = Math.max(profit, profit + profitFromNextScheduledJob);
-
-        }
-        cache[i] = Math.max(profitIfNextPicked, cache[i] ? cache[i] : profit);
-        return cache[i];
-    };
-
-    return generateMaxProfit(0); // (backtracking or dfs with caching)
+    return generateMaxProfit(0, jobs, cache); // (backtracking or dfs with caching)
 };
 
 const createJobs = (startTime, endTime, profit) =>{
@@ -50,12 +30,26 @@ const createJobs = (startTime, endTime, profit) =>{
 };
 
 const sortJobs = (job1, job2) => job1.startTime - job2.startTime;
+    
+const generateMaxProfit = (i, jobs, cache) => {
+    if (i >= jobs.length) return 0;
+    if (cache[i]) return cache[i];
 
-// const findMax = (array) => {
-//     return array.reduce((prevValue, nextValue) => {
-//         return prevValue > nextValue ? prevValue : nextValue;
-//     }, 0);
-// };
+    const {endTime, profit} = jobs[i];
+
+    const profitIfNextPicked = generateMaxProfit(i + 1, jobs, cache);
+    
+    // since the jobs are sorted, we can find the next job using binary search
+    let nextJob = findNextJob(jobs, i + 1, jobs.length - 1, endTime); 
+
+    if (nextJob) {
+        const profitFromNextScheduledJob = generateMaxProfit(nextJob, jobs, cache);
+        cache[i] = Math.max(profit, profit + profitFromNextScheduledJob);
+
+    }
+    cache[i] = Math.max(profitIfNextPicked, cache[i] ? cache[i] : profit);
+    return cache[i];
+};
 
 const findNextJob = (jobs, left, right, endTime) => {
     let i;
