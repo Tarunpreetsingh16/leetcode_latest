@@ -22,18 +22,18 @@ class Solution {
     }
 
     private int getMaxCapital(int k, int w, Project[] projects) {
-        PriorityQueue<Project> maxQueue = new PriorityQueue<Project>(new ProjectComparator());
+        PriorityQueue<Integer> maxQueue = new PriorityQueue<>(Collections.reverseOrder());
 
         int projectsPushed = 0;
 
         while (k > 0) {
             while (projectsPushed < projects.length && projects[projectsPushed].capital <= w) {
-                maxQueue.add(projects[projectsPushed]);
+                maxQueue.add(projects[projectsPushed].profit);
                 projectsPushed++;
             }
             if (maxQueue.size() == 0) return w;
-            Project project = maxQueue.poll();
-            w += project.profit;
+            Integer profit = maxQueue.poll();
+            w += profit;
             k--;
         }
         return w;
@@ -57,9 +57,9 @@ class SortProjects implements Comparator<Project> {
     }
 }
 
-class ProjectComparator implements Comparator<Project> {
-    @Override
-    public int compare(Project p1, Project p2) {
-        return p2.profit - p1.profit;
-    }
-}
+// class ProjectComparator implements Comparator<Project> {
+//     @Override
+//     public int compare(Project p1, Project p2) {
+//         return p2.profit - p1.profit;
+//     }
+// }
