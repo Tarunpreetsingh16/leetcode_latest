@@ -47,20 +47,6 @@ var findWords = function(board, words) {
             dfs(board, i, j, visited, result, trie.root, '');
         }
     }
-    // const h = trie.root.children.get('h');
-
-    // for (const key in h) {
-    //     if (key === 'children') {
-    //         const children = h[key];
-    //         const newnode = children.get('k');
-    //         for (const key2 in newnode) {
-    //             if (key2 === 'children') {
-    //                 const children = newnode[key];
-    //                 console.log(children.get('l'));
-    //             }
-    //         }
-    //     }
-    // }
     return Array.from(result);
 };
 
