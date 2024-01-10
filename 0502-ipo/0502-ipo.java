@@ -18,10 +18,6 @@ class Solution {
         //sort projects - descending order of capital. if capital is same, ascending order of profit.
         Arrays.sort(projects, new SortProjects());
 
-        for (Project project : projects) {
-             System.out.println(project);
-        }
-
         return getMaxCapital(k, w, projects);
     }
 
