@@ -5,10 +5,6 @@ class Project {
         this.profit = profit;
         this.capital = capital;
     }
-
-    public String toString() {
-        return this.profit + " " + this.capital;
-    }
 }
 
 class Solution {
@@ -16,7 +12,7 @@ class Solution {
         Project[] projects = createListOfProjects(profits, capital);
         
         //sort projects - descending order of capital. if capital is same, ascending order of profit.
-        Arrays.sort(projects, new SortProjects());
+        Arrays.sort(projects, (p1, p2) -> p1.capital - p2.capital);
 
         return getMaxCapital(k, w, projects);
     }
@@ -45,14 +41,5 @@ class Solution {
             projects[i] = new Project(profits[i], capital[i]);
         }
         return projects;
-    }
-}
-
-class SortProjects implements Comparator<Project> {
-    @Override
-    public int compare(Project p1, Project p2) {
-        return p1.capital - p2.capital == 0 ?
-            p2.profit - p1.profit :
-            p1.capital - p2.capital;
     }
 }
