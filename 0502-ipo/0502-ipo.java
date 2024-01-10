@@ -56,10 +56,3 @@ class SortProjects implements Comparator<Project> {
             p1.capital - p2.capital;
     }
 }
-
-// class ProjectComparator implements Comparator<Project> {
-//     @Override
-//     public int compare(Project p1, Project p2) {
-//         return p2.profit - p1.profit;
-//     }
-// }
