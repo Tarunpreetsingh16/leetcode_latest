@@ -15,20 +15,17 @@ var maxAncestorDiff = function(root) {
     let maxDiff = -Infinity;
 
     const dfs = (node, min, max) => {
-        if (!node) return;
-
-        maxDiff = Math.max(
-            maxDiff,
-            Math.abs(min - node.val),
-            Math.abs(max - node.val));
+        if (!node) {
+            maxDiff = Math.max(maxDiff, Math.abs(max - min));
+            return;
+        }
         min = Math.min(min, node.val);
         max = Math.max(max, node.val);
         dfs(node.left, min, max);
         dfs(node.right, min, max);
     };
 
-    dfs(root.left, root.val, root.val);
-    dfs(root.right, root.val, root.val);
+    dfs(root, root.val, root.val);
 
     return maxDiff;
 };
