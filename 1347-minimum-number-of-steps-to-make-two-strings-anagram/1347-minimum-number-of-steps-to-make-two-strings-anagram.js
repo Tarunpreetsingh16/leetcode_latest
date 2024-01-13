@@ -15,10 +15,8 @@ var minSteps = function(s, t) {
 
     let minSteps = 0;
     s.split('').forEach(char => {
-        if (map.has(char)) {
-            const newCount = map.get(char) - 1;
-            if (newCount === 0) map.delete(char);
-            else map.set(char, newCount);
+        if (map.has(char) && map.get(char) > 0) {
+            map.set(char, map.get(char) - 1);
         }
         else minSteps++;
     });
