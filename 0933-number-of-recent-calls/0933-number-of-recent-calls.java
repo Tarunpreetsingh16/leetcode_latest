@@ -1,18 +1,18 @@
 class RecentCounter {
 
-    private PriorityQueue<Integer> queue;
+    private LinkedList<Integer> list;
     
     public RecentCounter() {
-        queue = new PriorityQueue<Integer>();    
+        list = new LinkedList<Integer>();    
     }
     
     public int ping(int t) {
         int lowest = t - 3000;
-        while (!queue.isEmpty() && queue.peek() < lowest) {
-            queue.poll();
+        while (!list.isEmpty() && list.peek() < lowest) {
+            list.poll();
         }
-        queue.add(t);
-        return queue.size();
+        list.add(t);
+        return list.size();
     }
 }
 
