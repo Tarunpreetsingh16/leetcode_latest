@@ -6,12 +6,28 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
 var merge = function(nums1, m, nums2, n) {
-    let i = m - 1, j = n - 1, k = m + n - 1;
+    if (n === 0) return;
+    if (m === 0) {
+        nums1.forEach((val, idx) => nums1[idx] = nums2[idx]);
+        return;
+    }
 
-    while (i >= 0 && j >= 0) 
-        nums1[k--] = nums1[i] <= nums2[j] ?
-            nums2[j--] : 
-            nums1[i--];
-    while (j >= 0) 
-        nums1[k--] = nums2[j--];
+    let idxToBeUpdated = nums1.length - 1;
+    
+    m--; n--;
+    while (m >= 0 || n >= 0) {
+        const num1 = m >= 0 ? nums1[m] : Number.NEGATIVE_INFINITY;
+        const num2 = n >= 0 ? nums2[n] : Number.NEGATIVE_INFINITY;
+
+        let numToBeAdded = num1;
+        if (num1 < num2) {
+            numToBeAdded = num2;
+            n--;
+        }
+        else {
+            m--;    
+        }
+        nums1[idxToBeUpdated] = numToBeAdded;
+        idxToBeUpdated--;
+    }
 };
