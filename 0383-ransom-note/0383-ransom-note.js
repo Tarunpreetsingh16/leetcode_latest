@@ -4,26 +4,20 @@
  * @return {boolean}
  */
 var canConstruct = function(ransomNote, magazine) {
-    const map = new Map();
-    magazine.split('').forEach(char => {
-        if (!map.has(char)) {
-            map.set(char, 0);
-        }
-        const currentCount = map.get(char)
-        map.set(char, currentCount + 1)
+    const magazineLettersMap = {}
+    magazine.split("").forEach(letter => {
+        magazineLettersMap[letter] = letter in magazineLettersMap ? magazineLettersMap[letter] + 1 : 1
     })
 
-    let i = 0;
-    while (i < ransomNote.length) {
-        const char = ransomNote[i];
+    console.log(magazineLettersMap)
 
-        if (map.has(char) && map.get(char) > 0) {
-            const currentCount = map.get(char)
-            map.set(char, currentCount - 1);
-            i++;
-            continue;
+    const cannotCreateRansomNote = ransomNote.split("").some(letter => {
+        if (letter in magazineLettersMap && magazineLettersMap[letter] > 0) {
+            magazineLettersMap[letter] = magazineLettersMap[letter] - 1
+        } else {
+            return true
         }
-        return false;
-    }
-    return true;
+    })
+
+    return !cannotCreateRansomNote
 };
