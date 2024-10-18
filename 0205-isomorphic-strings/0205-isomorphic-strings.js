@@ -4,28 +4,20 @@
  * @return {boolean}
  */
 var isIsomorphic = function(s, t) {
-    if (s.length != t.length) return false;
+    const map1 = {}
+    const map2 = {}
 
-    let ptr = 0;
-    const sMap = new Map();
-    const tMap = new Map();
-
-    while (ptr < s.length) {
-        const sChar = s[ptr];
-        const tChar = t[ptr];
-        if (sMap.has(sChar)) {
-            if (sMap.get(sChar) != tChar) {
-                return false;
-            }
-        } 
-        else if (tMap.has(tChar)) {
-            if (tMap.get(tChar) != sChar) {
-                return false;
-            }
+    var isNotIsomorphic = false
+    for (var i = 0; i < s.length; i++) {
+        if (
+            (s[i] in map1 && map1[s[i]] != t[i]) || 
+            (t[i] in map2 && map2[t[i]] != s[i])
+        ) {
+            isNotIsomorphic = true;
+            break;
         }
-        sMap.set(sChar, tChar);
-        tMap.set(tChar, sChar);
-        ptr++;
+        map2[t[i]] = s[i]
+        map1[s[i]] = t[i]
     }
-    return true;
+    return !isNotIsomorphic
 };
