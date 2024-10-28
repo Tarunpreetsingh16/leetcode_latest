@@ -10,27 +10,13 @@
  * @param {number[]} nums
  * @return {TreeNode}
  */
-var sortedArrayToBST = function(nums) {
-    
-    const createBST = (arr) => {
-        if (arr.length <= 0) {
-            return null;
-        }
-        const mid = Math.floor(arr.length / 2);
-        const newNode = new TreeNode(arr[mid]);
-        const left = createBST(arr.slice(0, mid));
-        const right = createBST(arr.slice(mid + 1, arr.length));
-        newNode.left = left;
-        newNode.right = right;
-        return newNode;
+var sortedArrayToBST = function(arr) {
+    if (arr.length <= 0) {
+        return null;
     }
-    
-    const mid = Math.floor(nums.length / 2);
-    const newNode = new TreeNode(nums[mid]);
-    const left = createBST(nums.slice(0, mid));
-    const right = createBST(nums.slice(mid + 1, nums.length));
-    newNode.left = left;
-    newNode.right = right;
-
-    return newNode;
+    const mid = Math.floor(arr.length / 2);
+    return new TreeNode(
+        arr[mid],
+        sortedArrayToBST(arr.slice(0, mid)),
+        sortedArrayToBST(arr.slice(mid + 1, arr.length)));
 };
