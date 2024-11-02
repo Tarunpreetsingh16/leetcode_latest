@@ -3,25 +3,16 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-    let left=1;
-    let right=x;
-    let eligiblecandidate=0;
-    while(left<=right){
-        let n=parseInt((left+right)/2);
+    if (x === 0 || x === 1) return x;
+    let i = 0;
 
-        if((n*n)==x) {
-            return n;
-        }
-        else if((n*n)<x){
-            left=n+1;
-            eligiblecandidate=n;
-        }
-        else {
-            right=n-1;
-        }
+    while (i <= parseInt(x/2)) {
+        const iSquare = i * i;
+        const nextNum = i + 1;
 
+        if (iSquare === x || nextNum * nextNum > x) { 
+            return i;
+        }
+        i++;
     }
-    return eligiblecandidate;
-
-
 };
