@@ -3,27 +3,27 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-    let l = 0, r = 1, count = 1, swaps = 1;
+    let count = 1, l = 0, r = 1, swaps = 1;
+    const DUPLICATES_ALLOWED = 2;
 
-    while(r < nums.length) {
-        const leftChar = nums[l];
-        const rightChar = nums[r];
+    while (r < nums.length) {
+        const leftNum = nums[l], rightNum = nums[r];
 
-        if (leftChar === rightChar) {
-            if (count < 2) {
-                nums[l+1] = nums[r]
-                count++, r++
-                swaps++
-            } else {
-                r++
+        if (leftNum === rightNum) {
+            if (count < DUPLICATES_ALLOWED) {
+                nums[l + 1] = rightNum;
+                count++;
+                swaps++;
             }
-        } else {
-            l += count < 2 ? 1 : 2
-            nums[l] = nums[r]
-            r++
-            count = 1
-            swaps++
+            r++;
+        }
+        else {
+            l += count;
+            nums[l] = rightNum;
+            swaps++;
+            count = 1;
+            r++;
         }
     }
     return swaps;
-};  
+};
