@@ -3,19 +3,25 @@
  * @return {number}
  */
 var maxProfit = function(prices) {
-    let profit = 0;
+    let maxProfit = 0, i = 1
 
-    let left = 0, right = 1;
-
-    while (right < prices.length) {
-        const leftPrice = prices[left], rightPrice = prices[right];
-
-        if (rightPrice - leftPrice > 0) {
-            profit += (rightPrice - leftPrice)
+    // while (j < prices.length) {
+    //     if (prices[i] < prices[j]) {
+    //         while (j < prices.length && prices[j] < prices[j + 1]) {
+    //             j++
+    //         }
+    //         maxProfit += (prices[j] - prices[i])
+    //         i = j
+    //         j++
+    //     } else {
+    //         i++, j++
+    //     }
+    // }
+    while(i < prices.length) {
+        if (prices[i] > prices[i-1]) {
+            maxProfit += prices[i] - prices[i-1]
         }
-        left++;
-        right++;
+        i++
     }
-
-    return profit;
+    return maxProfit
 };
