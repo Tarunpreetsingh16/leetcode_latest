@@ -3,16 +3,21 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-    let k = 1;
-    let left = 0;
-    let right = 0;
-
-    while (right < nums.length) {
-        if (nums[left] != nums[right]) {
-            nums[++left] = nums[right];
-            k++;
+    if (nums.length < 2) return 1
+    let i = 0, j = 1, updateNum = false
+    while (j < nums.length) {
+        const left = nums[i], right = nums[j]
+        if (left != right) {
+            if (updateNum) {
+                nums[++i] = nums[j]
+                continue
+            }   
+            i++
         }
-        right++;
+        else {
+            updateNum = true
+        }
+        j++
     }
-    return k;
+    return i+1
 };
