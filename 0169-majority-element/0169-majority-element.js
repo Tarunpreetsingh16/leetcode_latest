@@ -3,21 +3,24 @@
  * @return {number}
  */
 var majorityElement = function(nums) {
-    let majorityElement = nums[0];
-    let count = 1;
+    let prevNum = nums[0], i = 1, count = 1
 
-    nums.forEach((num) => {
-        if (num != majorityElement) {
-            count--;
+    while (i < nums.length) {
+        const currNum = nums[i]
+        if (prevNum === currNum) {
+            count++
         }
         else {
-            count++;
+            count--
         }
-        if (count === 0) {
-            majorityElement = num;
-            count = 1;
-        }
-    }) 
 
-    return majorityElement;
-};                                           
+        if (count === 0) {
+            prevNum = currNum
+            count = 1
+        }
+        
+        i++
+    }
+
+    return prevNum
+};
