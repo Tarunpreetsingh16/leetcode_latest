@@ -1,29 +1,25 @@
-function TrieNode(val) {
-    this.val = val;
-    this.children = new Map();
-    this.wordEnd = false;
-
-    this.addWord = function(word) {
-        if (!word || word.length === 0) return;
-
-        const firstChar = word[0];
-        let nextCharNode = this.getNextCharNode(firstChar);
-        
-        if (!nextCharNode) {
-            nextCharNode = new TrieNode(firstChar);
-            this.children.set(firstChar, nextCharNode);
-        }
-        nextCharNode.addWord(word.substring(1));
+class TrieNode {
+    constructor(value) {
+        this.value = value
+        this.children = new Map()
+        this.endNode = false
     }
 
-    this.getNextCharNode = function(char) {
-        return this.children.get(char);
+    addChild(value, node) {
+        this.children.set(value, node)
     }
-}
 
-
-function Trie() {
-    return new TrieNode(null);
+    addWord(word) {
+        let node = this
+        word.split('').forEach(char => {
+            let childNode = node.children.get(char)
+            if (!childNode) {
+                childNode = new TrieNode(char)
+                node.addChild(char, childNode)
+            }
+            node = childNode
+        })
+    }
 }
 
 /**
@@ -31,24 +27,24 @@ function Trie() {
  * @return {string}
  */
 var longestCommonPrefix = function(strs) {
-    const root = new Trie();
-    let minLength = Infinity;
-    strs.forEach(str => {
-        root.addWord(str)
-        minLength = Math.min(minLength, str.length);
-    });
-
-    let result = "";
-    let size = root.children.size;
-    let node = root;
-    while (size === 1 && minLength > 0) {
-        const keys = node.children.keys();
-        const nextChar = keys.next().value;
-        node = node.children.get(nextChar);
-        result += nextChar;
-        size = node.children.size;
-        minLength--;
+    const trie = new TrieNode(null)
+    let minLength = Infinity
+    for (let i = 0; i < strs.length; i++) {
+        const str = strs[i]
+        if (str.trim().length === 0) return ""
+        minLength = Math.min(minLength, str.length)
+        trie.addWord(str)
     }
 
-    return result;
+    let children = trie.children
+    let result = ''
+
+    while (children.size === 1 && minLength-- > 0) {
+        let keys = children.keys()
+        const val = keys.next().value
+        children = children.get(val).children
+        result += val
+    }
+    return result
+
 };
