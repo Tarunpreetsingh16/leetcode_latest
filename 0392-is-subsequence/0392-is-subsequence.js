@@ -4,20 +4,12 @@
  * @return {boolean}
  */
 var isSubsequence = function(s, t) {
-    if (s === t || s.length === 0) return true;
-    if (s.length > t.length) return false;
-
-    let sPtr = 0, tPtr = 0;
-    let result = false;
-
-    while (sPtr < s.length && tPtr < t.length) {
-        if (s[sPtr] === t[tPtr]) {
-            sPtr++;
+    let i = 0, j = 0
+    while (i < t.length && j < s.length) {
+        if (t[i] === s[j]) {
+            j++
         }
-        if (sPtr == s.length) {
-            result = true;
-        }
-        tPtr++;
+        i++
     }
-    return result;
+    return j === s.length
 };
