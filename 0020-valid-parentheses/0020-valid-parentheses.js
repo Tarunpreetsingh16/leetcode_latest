@@ -3,23 +3,20 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-    if (s.length % 2 != 0) return false;
+    const map = new Map()
+    map.set(')', '(')
+    map.set('}', '{')
+    map.set(']', '[')
 
-    const stack = [];
-
-    const openingBrackets = new Set(['(', '{','[']);
-    const closingBrackets = new Set([')', '}',']']);
-    const map = new Map([[')', '('], ['}', '{'], [']', '[']])
-
+    const stack = []
     for (let i = 0; i < s.length; i++) {
-        const bracket = s[i];
-        if (openingBrackets.has(bracket)) {
-            stack.push(bracket);
+        const b = s[i]
+        if (b === '(' || b === '{' || b === '[') {
+            stack.push(b)
         }
         else {
-            const lastBracket = stack.pop();
-            if (map.get(bracket) != lastBracket) {
-                return false;
+            if (stack.length <= 0 || stack.pop() != map.get(b)) {
+                return false
             }
         }
     }
