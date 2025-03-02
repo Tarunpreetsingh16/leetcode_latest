@@ -12,17 +12,15 @@
  * @return {boolean}
  */
 var hasPathSum = function(root, targetSum) {
-    return isPathPresent(root, targetSum, 0)
+    const check = (node, sum) => {
+        if (!node) {
+            return false
+        }
+        if (!node.left && !node.right) {
+            return node.val + sum === targetSum
+        }
+        return check(node.left, sum + node.val) 
+        || check(node.right, sum + node.val)
+    }
+    return check(root, 0)
 };
-
-const isPathPresent = (node, targetSum, sumTillNow) => {
-    if (!node) {
-        return false
-    }
-    sumTillNow += node.val
-    if (!node.left && !node.right) {
-        return sumTillNow === targetSum
-    }
-    return isPathPresent(node.left, targetSum, sumTillNow) || 
-        isPathPresent(node.right, targetSum, sumTillNow)
-}
