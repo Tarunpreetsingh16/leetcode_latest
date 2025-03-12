@@ -3,25 +3,21 @@
  * @return {number}
  */
 var mySqrt = function(x) {
-    let left=1;
-    let right=x;
-    let eligiblecandidate=0;
-    while(left<=right){
-        let n=parseInt((left+right)/2);
-
-        if((n*n)==x) {
-            return n;
+    let l = 0, r = x, result = -1
+    while (l <= r) {
+        const mid = parseInt((l + r) /2)
+        const sq = mid * mid
+        if (sq === x) {
+            result = mid
+            break
         }
-        else if((n*n)<x){
-            left=n+1;
-            eligiblecandidate=n;
+        else if (sq < x) {
+            result = mid
+            l = mid + 1
         }
         else {
-            right=n-1;
+            r = mid - 1
         }
-
     }
-    return eligiblecandidate;
-
-
+    return result
 };
